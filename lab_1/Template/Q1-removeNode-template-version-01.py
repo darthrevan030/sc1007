@@ -1,12 +1,13 @@
 class ListNode:
-    def __init__(self, num):
-        self.num = num
+    def __init__(self, item):
+        self.item = item
         self.next = None
 
 def printList(head):
+    print("Current List:", end=" ")
     cur = head
     while cur is not None:
-        print(cur.num, end=" ")
+        print(cur.item, end=" ")
         cur = cur.next
     print()
 
@@ -28,7 +29,6 @@ def insertNode(ptrHead, index, value):
     if index == 0:
         newNode.next = ptrHead
         return newNode
-    
     cur = ptrHead
     prev = None
     count = 0
@@ -41,45 +41,34 @@ def insertNode(ptrHead, index, value):
         newNode.next = cur
     return ptrHead
 
-def deleteList(ptrHead):
-    cur = ptrHead
-    while cur is not None:
-        temp = cur.next
-        cur.next = None  
-        cur = temp
-    return None
-
-def split(head, ptrEvenList, ptrOddList):
-    # write your code here #
-
+def removeNode(ptrHead, index):
+    # Write your code here #
+    return
 if __name__ == "__main__":
     head = None
-    oddHead = []
-    evenHead = []
-    
+    size = 0
     print("Enter one number per line (press Enter after each number).")
     print("Enter any non-digit character to finish input:")
-    try:
-        while True:
+    while True:
+        try:
             item = int(input())
-            head = insertNode(head, 0, item)
-    except ValueError:
-        pass
-
-    print("\nBefore split() is called:")
-    print("The original list:", end=" ")
+            head = insertNode(head, size, item)
+            size += 1
+        except ValueError:
+            break
     printList(head)
     
-    split(head, evenHead, oddHead)
-    
-    print("\nAfter split() was called:")
-    print("The original list:", end=" ")
+    while True:
+        try:
+            index = int(input("Enter the index of the node to be removed: "))
+            result = removeNode(head, index)
+            if result == 1:
+                size -= 1
+                print("Node successfully removed")
+            else:
+                print("Removal failed")
+            print("After the removal operation:")
+            printList(head)
+        except ValueError:
+            break
     printList(head)
-    print("The even list:", end=" ")
-    printList(evenHead[0])
-    print("The odd list:", end=" ")
-    printList(oddHead[0])
-    
-    head = deleteList(head)
-    oddHead[0] = deleteList(oddHead[0])
-    evenHead[0] = deleteList(evenHead[0])

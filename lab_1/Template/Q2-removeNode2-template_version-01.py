@@ -51,7 +51,7 @@ def insertNode2(ll, index, item):
 
 def removeNode2(ll, index):
     # Write your code here #
-
+    return
 if __name__ == "__main__":  
     ll = LinkedList()
     print("Enter one number per line (press Enter after each number).")

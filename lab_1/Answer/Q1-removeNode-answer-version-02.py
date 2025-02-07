@@ -30,9 +30,46 @@ class LinkedList:
         current.next = new_node
         return 1
 
+##############################################################################################################################
     def remove(self, index):
-        # Write your code here #
+        # Check if the list is empty
+        if self.head is None:
+            print("List is Empty")
+            return 0
         
+        # Case 1: Remove the First node
+        if index == 0:
+            # Check if there is only one node in the list, if not, remove the first node
+            if self.head.next is not None:
+                self.head.data = self.head.next.data
+                temp = self.head.next
+                self.head.next = self.head.next.next
+                del temp
+            # If there is only one node in the list, remove it and set the head to None
+            else:
+                self.head = None
+            return 1
+        
+        # Case 2: Remove a node other than the first node
+        current = self.head
+        count = 0 # To keep track of the current node index
+
+        # Find the predecessor of the node to be removed
+        while current and count < (index - 1):
+            current = current.next
+            count += 1
+        
+        if not current or not current.next:
+            print("Index is out of range")
+            return 0
+        
+        # Remove the node
+        temp = current.next
+        current.next = temp.next
+        del temp
+        return 1
+#############################################################################################################################        
+    
     def printList(self):
         current = self.head
         while current:

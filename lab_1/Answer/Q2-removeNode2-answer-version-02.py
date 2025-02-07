@@ -47,7 +47,8 @@ class LinkedList:
 
     def remove2(self, index):
         # Write your code here #
-   
+        return
+    
 if __name__ == "__main__":
     ll = LinkedList()
     print("Enter one number per line (press Enter after each number).")
