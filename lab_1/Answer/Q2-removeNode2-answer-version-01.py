@@ -49,30 +49,53 @@ def insertNode2(ll, index, item):
         return True
     return False
 
+#################################################################################################################################
 def removeNode2(ll, index):
-    # Write your code here #
+    # Check if the List is empty
+    if ll.head is None:
+        return False
+    
+    # If removing the first node, update the head pointer
+    if index == 0:
+        cur = ll.head
+        ll.head = cur.next
+        del cur
+        ll.size -= 1
+        return True
+    
+    # Find the nodes before and at the target position
+    pre = findNode2(ll, index -1)
+    if pre is not None and pre.next is not None:
+        cur = pre.next
+        pre.next = cur.next
+        del cur
+        ll.size -= 1
+        return True
+    
+    return False
+################################################################################################################################
 
-    if __name__ == "__main__":  
-        ll = LinkedList()
-        print("Enter one number per line (press Enter after each number).")
-        print("Enter any non-digit character to finish input:")
-        try:
-            while True:
-                item = int(input())
-                if not insertNode2(ll, ll.size, item):
-                    break
-        except ValueError:
-            pass
-        printList2(ll)
-        
+if __name__ == "__main__":  
+    ll = LinkedList()
+    print("Enter one number per line (press Enter after each number).")
+    print("Enter any non-digit character to finish input:")
+    try:
         while True:
-            try:
-                index = int(input("Enter the index of the node to be removed: "))
-                if not removeNode2(ll, index):
-                    print("The node cannot be removed.")
-                    break
-                print("After the removal operation:")
-                printList2(ll)
-            except ValueError:
+            item = int(input())
+            if not insertNode2(ll, ll.size, item):
                 break
-        printList2(ll)
+    except ValueError:
+        pass
+    printList2(ll)
+    
+    while True:
+        try:
+            index = int(input("Enter the index of the node to be removed: "))
+            if not removeNode2(ll, index):
+                print("The node cannot be removed.")
+                break
+            print("After the removal operation:")
+            printList2(ll)
+        except ValueError:
+            break
+    printList2(ll)

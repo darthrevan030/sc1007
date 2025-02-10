@@ -45,9 +45,41 @@ class LinkedList:
                 cur = cur.next
             print()
 
+##############################################################################################################################
     def remove2(self, index):
-        # Write your code here #
-        return
+        # check if list is empty
+        if self.head is None:
+            print('List is Empty')
+            return False
+        
+        # handle removing first node
+        if index == 0:
+            cur = self.head
+            self.head = cur.next
+            del cur
+            self.size -= 1
+            return True
+        
+        # find node before removal point
+        current = self.head
+        count = 0
+        while current and count < (index -1):
+            current = current.next
+            count += 1
+        
+        # check if the position is valid
+        if not current or not current.next:
+            print("Index out of range")
+            return False
+        
+        # remove the node
+        temp = current.next
+        current.next = temp.next
+        del temp
+        self.size -= 1
+        return True
+################################################################################################################################
+
     
 if __name__ == "__main__":
     ll = LinkedList()

@@ -48,33 +48,51 @@ def deleteList(ptrHead):
         cur = temp
     return None
 
+###############################################################################################################################
 def duplicateReverse(head, ptrNewHead):
-    # write your code here #
+    # check if the list is empty
+    if head is None:
+        ptrNewHead[0] = None
+        return 0
+    
+    # if list is not empty, create new list in reverse order
+    cur = head
+    while cur is not None:
+        # create a new node for each element
+        newNode = ListNode(cur.num)
 
-    if __name__ == "__main__":
-        head = None
-        dupRevHead = [None]
-        
-        print("Enter a list of numbers, terminated by any non-digit character:")
-        print("Enter any non-digit character to finish input:")
-        try:
-            while True:
-                item = int(input())
-                head = insertNode(head, 0, item)  
-        except ValueError:
-            pass
+        # insert the new node at the beginning of the new list
+        newNode.next = ptrNewHead[0] # the next pointer of the new node is set to the current head of the new list
+        ptrNewHead[0] = newNode # the new node becomes the new head of the new list
+        cur = cur.next
 
-        print("\nBefore duplicateReverse() is called:")
-        print("The original list:", end=" ")
-        printList(head)
-        
-        duplicateReverse(head, dupRevHead)
-        
-        print("\nAfter duplicateReverse() was called:")
-        print("The original list:", end=" ")
-        printList(head)
-        print("The duplicated reverse list:", end=" ")
-        printList(dupRevHead[0])
-        
-        head = deleteList(head)
-        dupRevHead[0] = deleteList(dupRevHead[0])
+    return 0
+###############################################################################################################################
+
+if __name__ == "__main__":
+    head = None
+    dupRevHead = [None]
+    
+    print("Enter a list of numbers, terminated by any non-digit character:")
+    print("Enter any non-digit character to finish input:")
+    try:
+        while True:
+            item = int(input())
+            head = insertNode(head, 0, item)  
+    except ValueError:
+        pass
+
+    print("\nBefore duplicateReverse() is called:")
+    print("The original list:", end=" ")
+    printList(head)
+    
+    duplicateReverse(head, dupRevHead)
+    
+    print("\nAfter duplicateReverse() was called:")
+    print("The original list:", end=" ")
+    printList(head)
+    print("The duplicated reverse list:", end=" ")
+    printList(dupRevHead[0])
+    
+    head = deleteList(head)
+    dupRevHead[0] = deleteList(dupRevHead[0])

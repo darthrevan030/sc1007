@@ -56,9 +56,23 @@ class LinkedList:
             current = temp
         self.head = None
 
+###############################################################################################################################
     def duplicateReverse(self):
-        # Write your code here #
-        return
+        # create a new linked list for reversed copy
+        reversed_list = LinkedList()
+
+        if not self.head:
+            return reversed_list
+        
+        # create new list in reverse order
+        current = self.head
+        while current:
+            reversed_list.insert(current.data, 0)
+            current = current.next
+
+        return reversed_list
+##############################################################################################################################
+
 if __name__ == "__main__":
     # Create main linked list
     linked_list = LinkedList()

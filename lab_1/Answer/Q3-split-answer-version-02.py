@@ -45,9 +45,29 @@ class LinkedList:
             current = temp
         self.head = None
 
+###############################################################################################################################
     def split(self):
-        # Write your code here #
-        return
+        # create two new linked lists for even and odd numbers
+        even_list = LinkedList()
+        odd_list = LinkedList()
+
+        # handle empty list case
+        if not self.head:
+            return even_list, odd_list
+        
+        # traverse the original list
+        current = self.head
+        while current:
+            # if number is even, add to even_list
+            if current.data % 2 == 0:
+                even_list.insert(current.data, 0)
+            # if number is odd, add to odd_list
+            else:
+                odd_list.insert(current.data, 0)
+            current = current.next
+
+        return even_list, odd_list
+###############################################################################################################################
 
 if __name__ == "__main__":
     # Create main linked list

@@ -49,37 +49,70 @@ def deleteList(ptrHead):
         cur = temp
     return None
 
+###############################################################################################################################
 def split(head, ptrEvenList, ptrOddList):
-    # write your code here #
+    # check if the list is empty
+    if head is None:
+        #append None to the list and return 0
+        ptrEvenList.append(None)
+        ptrOddList.append(None)
+        return 0
+    
+    evenHead, oddHead = None, None
+    evenTail, oddTail = None, None
+    cur = head
 
-    if __name__ == "__main__":
-        head = None
-        oddHead = []
-        evenHead = []
-        
-        print("Enter one number per line (press Enter after each number).")
-        print("Enter any non-digit character to finish input:")
-        try:
-            while True:
-                item = int(input())
-                head = insertNode(head, 0, item)
-        except ValueError:
-            pass
+    while cur is not None:
+        if cur.num % 2 == 0:
+            if evenHead is None:
+                evenHead = ListNode(cur.num)
+                evenTail = evenHead
+            else:
+                evenTail.next = ListNode(cur.num)
+                evenTail = evenTail.next
+        else:
+            if oddHead is None:
+                oddHead = ListNode(cur.num)
+                oddTail = oddHead
+            else:
+                oddTail.next = ListNode(cur.num)
+                oddTail = oddTail.next
+        cur = cur.next
+    
+    ptrEvenList.append(evenHead) # append the head of the even list
+    ptrOddList(oddHead) # append the head of the odd list
 
-        print("\nBefore split() is called:")
-        print("The original list:", end=" ")
-        printList(head)
-        
-        split(head, evenHead, oddHead)
-        
-        print("\nAfter split() was called:")
-        print("The original list:", end=" ")
-        printList(head)
-        print("The even list:", end=" ")
-        printList(evenHead[0])
-        print("The odd list:", end=" ")
-        printList(oddHead[0])
-        
-        head = deleteList(head)
-        oddHead[0] = deleteList(oddHead[0])
-        evenHead[0] = deleteList(evenHead[0])
+    return 0
+##############################################################################################################################
+
+if __name__ == "__main__":
+    head = None
+    oddHead = []
+    evenHead = []
+    
+    print("Enter one number per line (press Enter after each number).")
+    print("Enter any non-digit character to finish input:")
+    try:
+        while True:
+            item = int(input())
+            head = insertNode(head, 0, item)
+    except ValueError:
+        pass
+
+    print("\nBefore split() is called:")
+    print("The original list:", end=" ")
+    printList(head)
+    
+    split(head, evenHead, oddHead)
+    
+    print("\nAfter split() was called:")
+    print("The original list:", end=" ")
+    printList(head)
+    print("The even list:", end=" ")
+    printList(evenHead[0])
+    print("The odd list:", end=" ")
+    printList(oddHead[0])
+    
+    head = deleteList(head)
+    oddHead[0] = deleteList(oddHead[0])
+    evenHead[0] = deleteList(evenHead[0])
