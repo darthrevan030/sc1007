@@ -94,8 +94,17 @@ class Stack:
 
 ##############################################################################################################################
 def balanced(expression):
-# Write your code here #
-    return
+    stack = Stack()
+    matching = {")":"(", "]":"[", "}":"{"}
+
+    for char in expression:
+        if char in "([{":
+            stack.push(char)
+        elif char in "]})":
+            if stack.isEmpty() or stack.pop() != matching[char]:
+                return False
+
+    return stack.isEmpty()
 ##############################################################################################################################
 
 if __name__ == "__main__":

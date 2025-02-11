@@ -98,8 +98,15 @@ class Queue:
 
 ##############################################################################################################################
 def recursiveReverse(queue):
-# Write your code here #
-    return
+    # ensure the queue is not empty
+    if queue.isEmpty():
+        return None
+    # dequeue current item (from front)
+    item = queue.dequeue()
+    # reverse remaining queue
+    recursiveReverse(queue)
+    # enqueue current item (to rear)
+    queue.enqueue(item)
 ##############################################################################################################################
 
 if __name__ == "__main__":
