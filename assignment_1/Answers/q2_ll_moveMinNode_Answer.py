@@ -53,29 +53,33 @@ def moveMinNode(head):
     # Handle empty list or single node
     if head is None or head.next is None:
         return head
-        
-    # Initialize pointers
-    current = head
-    min_node = head
-    prev = None
-    min_prev = None
     
-    # Find minimum node and its previous node
-    while current is not None:
-        if current.data < min_node.data:
-            min_node = current
-            min_prev = prev
-        prev = current
-        current = current.next
+    # Find minimum value first
+    min_val = head.data
+    curr = head.next
+    while curr:
+        if curr.data < min_val:
+            min_val = curr.data
+        curr = curr.next
     
-    # If minimum is already at head, return
-    if min_node == head:
+    # If head has min value, return
+    if head.data == min_val:
         return head
-        
-    # Move minimum to front
-    min_prev.next = min_node.next  # Remove min node from its position
-    min_node.next = head           # Point min node to the current head
-    head = min_node               # Make min node the new head
+    
+    # Find the min node and its previous node
+    curr = head.next
+    prev = head
+    while curr and curr.data != min_val:
+        prev = curr
+        curr = curr.next
+    
+    # Now curr points to min node and prev to its previous node
+    # Remove min node from its position
+    prev.next = curr.next
+    
+    # Put min node at head
+    curr.next = head
+    head = curr
     
     return head
 ####################################################################################################################################################
