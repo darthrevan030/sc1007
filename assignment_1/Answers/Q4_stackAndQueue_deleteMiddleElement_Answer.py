@@ -112,19 +112,23 @@ def deleteMiddleElement(s):
     # Create temporary stack
     temp = Stack()
     
-    # Calculate how many elements to move
-    elements_to_move = (size + 1) // 2 - 1
-    
-    # Move elements to temporary stack
-    for i in range(elements_to_move):
+        # Move all elements to temp stack first (this will reverse them)
+    count = size
+    while count > 0:
         temp.push(s.pop())
+        count -= 1
         
-    # Remove middle element
-    s.pop()
+    # Now move back all elements except middle one
+    # For even numbers, skip element at position size//2
+    # For odd numbers, skip element at position (size-1)//2
+    middle = (size-1)//2  # Changed middle calculation
     
-    # Restore elements from temporary stack
+    count = 0
     while not temp.isEmpty():
-        s.push(temp.pop())
+        element = temp.pop()
+        if count != middle:  # Skip middle element
+            s.push(element)
+        count += 1
 ####################################################################################################################################################
 
 if __name__ == "__main__":
