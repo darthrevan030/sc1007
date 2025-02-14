@@ -103,7 +103,26 @@ class Stack:
 
 ####################################################################################################################################################
 def deleteMiddleElement(s):
-# write your code here #
+    if s.isEmpty():
+        return
+        
+    # Get stack size and calculate middle position
+    size = s.getSize()
+    middle = size // 2  # Integer division gives us lower middle for even numbers
+    
+    # Create temporary stack
+    temp = Stack()
+    
+    # Move elements to temporary stack until we reach middle
+    for i in range(size - middle - 1):
+        temp.push(s.pop())
+        
+    # Remove middle element
+    s.pop()
+    
+    # Restore elements from temporary stack
+    while not temp.isEmpty():
+        s.push(temp.pop())
     return
 ####################################################################################################################################################
 
