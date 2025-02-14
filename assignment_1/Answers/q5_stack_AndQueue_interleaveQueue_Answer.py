@@ -124,7 +124,33 @@ class Queue:
 
 ####################################################################################################################################################
 def interleaveQueue(q):
-# Write your code here #
+    if q.isEmpty():
+        return
+        
+    # Get the size and calculate midpoint
+    size = q.getSize()
+    half = size // 2
+    
+    # Create a stack for temporary storage
+    stack = Stack()
+    
+    # Step 1: Dequeue second half and push to stack (this reverses their order)
+    for i in range(half):
+        q.enqueue(q.dequeue())  # Move first half to back
+    
+    for i in range(half):
+        stack.push(q.dequeue())  # Push second half to stack
+        
+    # Step 2: Interleave by alternating between stack and queue
+    while not stack.isEmpty():
+        # Get one element from first half (front of queue)
+        first_half = q.dequeue()
+        # Get one element from second half (top of stack)
+        second_half = stack.pop()
+        
+        # Put them back in desired order
+        q.enqueue(first_half)
+        q.enqueue(second_half)
     return
 ####################################################################################################################################################
 
