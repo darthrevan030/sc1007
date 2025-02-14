@@ -54,35 +54,32 @@ def moveMinNode(head):
     if head is None or head.next is None:
         return head
         
-    # Initialize variables to track minimum node and its previous node
-    min_node = head
-    min_prev = None
-    curr_min = head.data
+    # Find minimum value in the list first
+    curr = head
+    min_val = head.data
+    while curr is not None:
+        if curr.data < min_val:
+            min_val = curr.data
+        curr = curr.next
     
-    # Variables for traversing the list
+    # If head is minimum, no change needed
+    if head.data == min_val:
+        return head
+    
+    # Find first occurrence of minimum value
     prev = head
     curr = head.next
     
-    # Find minimum node and its previous node
-    while curr is not None:
-        if curr.data < curr_min:
-            curr_min = curr.data
-            min_node = curr
-            min_prev = prev
+    while curr is not None and curr.data != min_val:
         prev = curr
         curr = curr.next
     
-    # If minimum node is already at head, no change needed
-    if min_prev is None:
-        return head
-        
-    # Remove minimum node from its current position
-    min_prev.next = min_node.next
+    # curr now points to min node, prev to its previous node
+    # Adjust the links
+    prev.next = curr.next
+    curr.next = head
     
-    # Place minimum node at head
-    min_node.next = head
-    
-    return min_node
+    return curr
 ####################################################################################################################################################
 
 if __name__ == "__main__":
