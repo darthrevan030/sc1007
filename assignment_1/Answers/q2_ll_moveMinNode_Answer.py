@@ -50,38 +50,39 @@ class LinkedList:
 
 ####################################################################################################################################################
 def moveMinNode(head):
-    # Handle empty list or single node
+    # If list is empty or has only one node, no change needed
     if head is None or head.next is None:
         return head
+        
+    # Initialize variables to track minimum node and its previous node
+    min_node = head
+    min_prev = None
+    curr_min = head.data
     
-    # Find minimum value first
-    min_val = head.data
-    curr = head.next
-    while curr:
-        if curr.data < min_val:
-            min_val = curr.data
-        curr = curr.next
-    
-    # If head has min value, return
-    if head.data == min_val:
-        return head
-    
-    # Find the min node and its previous node
-    curr = head.next
+    # Variables for traversing the list
     prev = head
-    while curr and curr.data != min_val:
+    curr = head.next
+    
+    # Find minimum node and its previous node
+    while curr is not None:
+        if curr.data < curr_min:
+            curr_min = curr.data
+            min_node = curr
+            min_prev = prev
         prev = curr
         curr = curr.next
     
-    # Now curr points to min node and prev to its previous node
-    # Remove min node from its position
-    prev.next = curr.next
+    # If minimum node is already at head, no change needed
+    if min_prev is None:
+        return head
+        
+    # Remove minimum node from its current position
+    min_prev.next = min_node.next
     
-    # Put min node at head
-    curr.next = head
-    head = curr
+    # Place minimum node at head
+    min_node.next = head
     
-    return head
+    return min_node
 ####################################################################################################################################################
 
 if __name__ == "__main__":
