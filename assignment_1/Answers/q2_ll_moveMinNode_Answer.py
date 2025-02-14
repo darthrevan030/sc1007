@@ -54,46 +54,35 @@ def moveMinNode(head):
     if not head or not head.next:
         return head
     
-    # Find minimum value in a single pass
-    min_val = head.data
-    curr = head.next
+    # Find minimum value
+    min_val = float('inf')
+    curr = head
     while curr:
         if curr.data < min_val:
             min_val = curr.data
         curr = curr.next
     
-    # If no min nodes need to be moved (head is min and no other mins)
-    if head.data == min_val and head.next.data != min_val:
-        return head
-    
-    # Create new head for min nodes
-    new_head = None
-    
-    # Handle all nodes in a single pass
-    dummy = Node(0)
-    dummy.next = head
-    prev = dummy
+    # Create new list starting with min nodes
+    dummy = Node(0)  # Dummy node to help build result
+    dummy_min = dummy  # Keep track of last min node
     curr = head
     
+    # First move all min nodes to front
     while curr:
         if curr.data == min_val:
-            # Remove from current position
-            prev.next = curr.next
-            # Move to front
-            curr.next = new_head
-            new_head = curr
-            curr = prev.next
-        else:
-            prev = curr
-            curr = curr.next
-    
-    # Connect min nodes to rest of list
-    curr = new_head
-    while curr.next:
+            dummy_min.next = Node(curr.data)
+            dummy_min = dummy_min.next
         curr = curr.next
-    curr.next = dummy.next
     
-    return new_head
+    # Then add all non-min nodes
+    curr = head
+    while curr:
+        if curr.data != min_val:
+            dummy_min.next = Node(curr.data)
+            dummy_min = dummy_min.next
+        curr = curr.next
+        
+    return dummy.next
 ####################################################################################################################################################
 
 if __name__ == "__main__":
