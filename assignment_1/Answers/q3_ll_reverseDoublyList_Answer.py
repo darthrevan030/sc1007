@@ -73,8 +73,34 @@ class DoublyLinkedList:
         return True
 ####################################################################################################################################################
 def reverseDoublyList(head):
-# Write your code here #
-    return
+    # If list is empty or has only one node
+    if not head or not head.next:
+        return head
+        
+    # Initialize pointers
+    current = head
+    temp = None
+    
+    # Traverse and swap next and prev pointers
+    while current:
+        # Store temp pointer
+        temp = current.prev
+        
+        # Swap prev and next pointers
+        current.prev = current.next
+        current.next = temp
+        
+        # Move to next node
+        # (Using prev because we just swapped pointers)
+        current = current.prev
+    
+    # After the loop, temp points to second last node
+    # Current is None
+    # Set head to last node
+    if temp:
+        head = temp.prev
+
+    return head
 ####################################################################################################################################################
 
 if __name__ == "__main__":
