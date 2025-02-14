@@ -50,36 +50,65 @@ class LinkedList:
 
 ####################################################################################################################################################
 def moveMinNode(head):
-    # If list is empty or has only one node, no change needed
-    if head is None or head.next is None:
-        return head
-        
-    # Find minimum value in the list first
+    # First find minimum value in list
     curr = head
     min_val = head.data
-    while curr is not None:
+    while curr:
         if curr.data < min_val:
             min_val = curr.data
         curr = curr.next
     
-    # If head is minimum, no change needed
+    # If first node is already minimum and no other min nodes exist
     if head.data == min_val:
+        curr = head.next
+        prev = head
+        # Check for other min nodes
+        while curr:
+            if curr.data == min_val:
+                # Remove this min node
+                prev.next = curr.next
+                # Move it to front
+                curr.next = head
+                head = curr
+                curr = prev.next
+            else:
+                prev = curr
+                curr = curr.next
         return head
     
-    # Find first occurrence of minimum value
-    prev = head
-    curr = head.next
+    # Create new head for min nodes
+    new_head = None
+    last_min = None
     
-    while curr is not None and curr.data != min_val:
-        prev = curr
-        curr = curr.next
+    # Remove all min nodes and create new list with them
+    dummy = Node(0)  # Dummy node to handle head changes
+    dummy.next = head
+    prev = dummy
+    curr = head
     
-    # curr now points to min node, prev to its previous node
-    # Adjust the links
-    prev.next = curr.next
-    curr.next = head
+    while curr:
+        next_node = curr.next
+        if curr.data == min_val:
+            # Remove from original list
+            prev.next = curr.next
+            # Add to front of new list
+            if not new_head:
+                new_head = curr
+                last_min = curr
+            else:
+                curr.next = new_head
+                new_head = curr
+        else:
+            prev = curr
+        curr = next_node
     
-    return curr
+    # Connect min nodes list to rest of list
+    last_min = new_head
+    while last_min.next:
+        last_min = last_min.next
+    last_min.next = dummy.next
+    
+    return new_head
 ####################################################################################################################################################
 
 if __name__ == "__main__":
