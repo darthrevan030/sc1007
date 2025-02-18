@@ -1,5 +1,5 @@
 def moveEvenItemsToBack(ll):
-    in ll.size < 2:
+    if ll.size < 2:
         return
     
     cur = ll.head
