@@ -40,8 +40,11 @@ def printTree(node, level=0, prefix="Root: "):
 ##################################################################################################################################
 def printBSTInOrder(node):
     """ Print BST items in sorted order using in-order traversal. """
+    if node:
+        printBSTInOrder(node.left)
+        print(node.item, end = " ")
+        printBSTInOrder(node.right)
 
-    return
 ##################################################################################################################################
 
 if __name__ == "__main__":
