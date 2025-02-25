@@ -24,8 +24,47 @@ def findMin(node):
 ##################################################################################################################################
 def removeBSTNode(node, value):
     """ Remove a node from the BST and return the updated root. """
-# Write your code here #
-    return
+    if node is None:
+        return -1
+    
+    parent = None
+    current = node
+
+    # search for the node to delete
+    while current and current.item != value:
+        parent = current
+        if value < current.item:
+            current = current.left
+        else:
+            current = current.right
+
+    
+    # case 1: Node has no children
+    if not current.left and not current.right:
+        if parent.left == current:
+            parent.left = None
+        else:
+            parent.right = None
+    
+    # case 2: Node has one child
+    elif not current.left or not current.right:
+        child = current.left if current.left else current.right
+        
+        if parent.left == current:
+            parent.left = child
+        else:
+            parent.right = child
+
+    else:
+        successor = findMin(current.right)
+        current.item = successor.item
+        result = removeBSTNode(current.right, successor.item)
+
+        if result == -1:
+            return -1
+        
+
+    return 0
 ##################################################################################################################################
 
 def printBSTInOrder(node):
