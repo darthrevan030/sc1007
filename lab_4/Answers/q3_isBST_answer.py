@@ -48,8 +48,14 @@ def printTree(node, level=0, prefix="Root: "):
 ##################################################################################################################################
 def isBST(node, min_val=float('-inf'), max_val=float('inf')):
     """ Checks if a tree is a valid BST using min/max constraints. """
-# Write your code here #
-    return
+    if node is None:
+        return True
+    
+    if not (min_val < node.item < max_val):
+        return False
+    
+
+    return isBST(node.left, min_val, node.item) and isBST(node.right, min_val, max_val)
 ##################################################################################################################################
 
 def createInvalidBST():
