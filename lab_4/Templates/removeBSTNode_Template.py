@@ -21,9 +21,12 @@ def findMin(node):
         node = node.left
     return node
 
+##################################################################################################################################
 def removeBSTNode(node, value):
     """ Remove a node from the BST and return the updated root. """
- # Write your code here #
+# Write your code here #
+    return
+##################################################################################################################################
 
 def printBSTInOrder(node):
     """ Print BST items in sorted order using in-order traversal. """
