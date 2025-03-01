@@ -80,7 +80,7 @@ def split(head, ptrEvenList, ptrOddList):
         cur = cur.next
     
     ptrEvenList.append(evenHead) # append the head of the even list
-    ptrOddList(oddHead) # append the head of the odd list
+    ptrOddList.append(oddHead) # append the head of the odd list
 
     return 0
 ##############################################################################################################################
