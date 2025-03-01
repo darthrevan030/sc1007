@@ -49,9 +49,37 @@ def insertNode2(ll, index, item):
         return True
     return False
 
+#################################################################################################################################################
 def removeNode2(ll, index):
-    # Write your code here #
-    return
+    if ll.head is None:
+        return 0
+    
+    if index == 0:
+        temp = ll.head
+        ll.head = ll.head.next
+        del temp
+        ll.size -= 1
+        return 1
+    
+    cur = ll.head
+    count = 0
+
+    while cur and count < index -1:
+        cur = cur.next
+        count += 1
+
+    pre = findNode2(ll, index - 1)
+    
+    if pre is not None or pre.next is not None:
+        cur = pre.next
+        pre.next = cur.next
+        del cur
+        ll.size -= 1
+        return 1
+    
+    return 1
+#################################################################################################################################################
+
 if __name__ == "__main__":  
     ll = LinkedList()
     print("Enter one number per line (press Enter after each number).")
