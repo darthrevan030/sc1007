@@ -41,9 +41,18 @@ def insertNode(ptrHead, index, value):
         newNode.next = cur
     return ptrHead
 
+#################################################################################################################################################
 def removeNode(ptrHead, index):
-    # Write your code here #
-    return
+    if ptrHead.next is not None:
+        ptrHead.item = ptrHead.next.item
+        temp = ptrHead.next
+        ptrHead.next = ptrHead.next.next
+        del temp
+    else:
+        ptrHead = None
+    return 1
+#################################################################################################################################################
+
 if __name__ == "__main__":
     head = None
     size = 0
