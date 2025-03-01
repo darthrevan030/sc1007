@@ -49,9 +49,44 @@ def deleteList(ptrHead):
         cur = temp
     return None
 
+#################################################################################################################################################
 def split(head, ptrEvenList, ptrOddList):
-    # write your code here #
-    return
+    if head is None:
+        ptrEvenList.append(None)
+        ptrOddList.append(None)
+        return 0
+    
+    evenHead = None
+    evenTail = None
+    oddHead = None
+    oddTail = None
+
+    cur = head
+
+    while cur is not None:
+        if cur.num % 2 == 0:
+            if evenHead is None:
+                evenHead = ListNode(cur.num)
+                evenTail = evenHead
+            else:
+                evenTail.next = ListNode(cur.num)
+                evenTail = evenTail.next
+        else: 
+            if oddHead is None:
+                oddHead = ListNode(cur.num)
+                oddTail = oddHead
+            else:
+                oddTail.next = ListNode(cur.num)
+                oddTail = oddTail.next
+        
+        cur = cur.next
+
+        ptrEvenList.append(evenHead)
+        ptrOddList.append(oddHead)
+
+    return 0
+#################################################################################################################################################
+
 if __name__ == "__main__":
     head = None
     oddHead = []
