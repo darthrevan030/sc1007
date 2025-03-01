@@ -78,11 +78,11 @@ def split(head, ptrEvenList, ptrOddList):
             else:
                 oddTail.next = ListNode(cur.num)
                 oddTail = oddTail.next
-        
+
         cur = cur.next
 
-        ptrEvenList.append(evenHead)
-        ptrOddList.append(oddHead)
+    ptrEvenList.append(evenHead)
+    ptrOddList.append(oddHead)
 
     return 0
 #################################################################################################################################################
