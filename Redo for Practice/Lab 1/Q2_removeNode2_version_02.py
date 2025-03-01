@@ -45,9 +45,38 @@ class LinkedList:
                 cur = cur.next
             print()
 
+#################################################################################################################################################
     def remove2(self, index):
-        # Write your code here #
-        return
+        if self.head is None:
+            print("List is empty")
+            return 0
+        
+        if index == 0:
+            if self.head is not None:
+                cur = self.head
+                self.head = cur.next
+                del cur
+                self.size -= 1
+                return 1
+            
+        cur = self.head
+        count = 0
+        while cur and count < index - 1:
+            cur = cur.next
+            count += 1
+        
+        if not cur or not cur.next:
+            print("Index out of range")
+            return 0
+        
+        temp = cur.next
+        cur.next = temp.next
+        del temp
+        self.size -= 1 
+        
+        return 1
+#################################################################################################################################################
+
 if __name__ == "__main__":
     ll = LinkedList()
     print("Enter one number per line (press Enter after each number).")
