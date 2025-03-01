@@ -30,9 +30,37 @@ class LinkedList:
         current.next = new_node
         return 1
 
+#################################################################################################################################################
     def remove(self, index):
-        # Write your code here #
-        return
+        if self.head is None:
+            return 0
+        
+        if index == 0:
+            if self.head.next is not None:
+                self.head.data = self.head.next.data
+                temp = self.head.next
+                self.head.next = self.head.next.next
+                del temp
+            else:
+                self.head = None
+            return 1
+        
+        cur = self.head
+        count = 0
+
+        while cur and count < (index -1):
+            cur = cur.next
+            count += 1
+        
+        if not cur or not cur.next:
+            print('Index out of range')
+            return 0
+        
+        cur.next = cur.next.next
+
+        return 1
+#################################################################################################################################################
+    
     def printList(self):
         current = self.head
         while current:
