@@ -47,8 +47,24 @@ class LinkedList:
 
 #################################################################################################################################################
     def split(self):
-        # Write your code here #
-        return
+        
+        even_list = LinkedList()
+        odd_list = LinkedList()
+
+        if self.head is None:
+            return even_list, odd_list
+        
+        cur = self.head
+
+        while cur:
+            if cur.data % 2 == 0:
+                even_list.insert(cur.data, 0)
+            else:
+                odd_list.insert(cur.data, 0)
+            cur = cur.next
+
+
+        return even_list, odd_list
 #################################################################################################################################################
 
 if __name__ == "__main__":
