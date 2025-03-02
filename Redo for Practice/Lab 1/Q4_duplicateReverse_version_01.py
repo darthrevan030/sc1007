@@ -48,9 +48,25 @@ def deleteList(ptrHead):
         cur = temp
     return None
 
+#################################################################################################################################################
 def duplicateReverse(head, ptrNewHead):
-    # write your code here #
-    return
+    
+    if head is None:
+        ptrNewHead = None
+        return 0
+    
+    cur = head
+    
+    while cur is not None:
+        newNode = ListNode(cur.num)
+        
+        newNode.next = ptrNewHead[0]
+        ptrNewHead[0] = newNode
+        cur = cur.next
+    
+    return 0
+#################################################################################################################################################
+
 if __name__ == "__main__":
     head = None
     dupRevHead = [None]
