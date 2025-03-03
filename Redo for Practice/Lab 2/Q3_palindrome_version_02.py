@@ -104,8 +104,23 @@ class Queue:
 
 ##############################################################################################################################
 def palindrome(word):
-# Write your code here #
-    return
+
+    stack = Stack()
+    queue = Queue()
+
+    word = word.upper()
+    strippedWord = "".join(word.split(" "))
+
+    for char in strippedWord:
+        queue.enqueue(char)
+        stack.push(char)
+
+    while not stack.is_empty:
+        if stack.pop() != queue.dequeue():
+            print("The string is not a palindrome")
+        else:
+            print("This string is a palindrome!")
+
 ##############################################################################################################################
 
 if __name__ == "__main__":
@@ -113,3 +128,5 @@ if __name__ == "__main__":
     palindrome("A man a plan a canal Panama")
     print("Sample String : Superman in the sky")
     palindrome("Superman in the sky")
+    palindrome("racecar")
+    palindrome("912")
