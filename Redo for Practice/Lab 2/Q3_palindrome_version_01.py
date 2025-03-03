@@ -120,8 +120,25 @@ class Queue:
 
 ##############################################################################################################################
 def palindrome(word):
-#Write your code here #
-    return
+    stack = Stack()
+    queue = Queue()
+    
+    word = word.upper()
+    strippedWord = "".join(word.split())
+
+    for char in strippedWord:
+        stack.push(char)
+        queue.enqueue(char)
+    
+    while not stack.isEmpty():
+        if stack.pop() != queue.dequeue():
+            print("The string is not a palindrome")
+            return 0
+
+
+    print("The string is a palindrome!")
+    
+    return 1
 ##############################################################################################################################
 
 if __name__ == "__main__":
