@@ -55,7 +55,7 @@ def isBST(node, min_val=float('-inf'), max_val=float('inf')):
         return False
     
 
-    return isBST(node.left, min_val, node.item) and isBST(node.right, min_val, max_val)
+    return isBST(node.left, min_val, node.item) and isBST(node.right, node.item, max_val)
 ##################################################################################################################################
 
 def createInvalidBST():
