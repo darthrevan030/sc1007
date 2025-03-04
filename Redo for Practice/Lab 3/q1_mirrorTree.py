@@ -22,7 +22,16 @@ def printTree(node, level=0, prefix="Root: "):
 
 ###########################################################################################################################################
 def mirrorTree(node):
-# Write your code here #
+    
+    if node is not None:
+        if node.left:
+            tempRight = node.right
+            
+            node.right = node.left
+            node.left = tempRight
+
+            mirrorTree(node.left)
+
     return
 ###########################################################################################################################################
 
