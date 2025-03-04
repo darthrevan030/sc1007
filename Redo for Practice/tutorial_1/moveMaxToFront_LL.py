@@ -84,7 +84,7 @@ def moveMaxToFront(ll):
         return
     
     cur = ll.head
-    max = ll.head.item
+    max = cur.item
     index = 0
     indexToSave = 0
 
