@@ -36,6 +36,7 @@ def hasGreatGrandchild(node):
     
     return maxHeight + 1
 ###########################################################################################################################################
+
 if __name__ == "__main__":
     # Create a tree with nodes having great-grandchildren
     root = BTNode(1)
