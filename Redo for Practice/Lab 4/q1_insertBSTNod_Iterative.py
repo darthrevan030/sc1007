@@ -7,8 +7,28 @@ class BTNode:
 ##################################################################################################################################
 def insertBSTNode(root, value):
     """Iterative approach to insert a node into the BST"""
-    # Write your code here #
-    return
+    if root is None:
+        return BTNode(value)
+    
+    cur = root
+
+    while True:
+        if value < cur.item:
+            if cur.left:
+                cur = cur.left
+            else:
+                cur.left = BTNode(value)
+                break
+        elif value > cur.item:
+            if cur.right:
+                cur = cur.right
+            else:
+                cur.right = BTNode(value)
+                break
+        else:
+            break
+    
+    return root
 ##################################################################################################################################
 
 def printTree(node, level=0, prefix="Root: "):
