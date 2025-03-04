@@ -105,6 +105,9 @@ class Queue:
 #########################################################################################################################################
 def reverse_first_k_items(queue, k):
     
+    if k < 0 or queue.isEmpty() or k > queue.ll.size:
+        return
+
     stack = Stack()
 
     for i in range(k):
