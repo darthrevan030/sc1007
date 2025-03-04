@@ -77,8 +77,31 @@ class LinkedList:
         
 #######################################################################################################################################
 def moveMaxToFront(ll):
+    if ll.head is None:
+        return
     
-    return 0
+    if ll.size == 1:
+        return
+    
+    cur = ll.head
+    max = ll.head.item
+    index = 1
+
+    for i in range(ll.size):
+
+        if cur.item > max:
+            max = cur.item
+            indexS = index
+        
+        cur = cur.next
+        index += 1
+    
+    ll.removeNode(indexS)
+
+    ll.insertNode(max, 0)
+
+
+    return 
 #####################################################################################################################################
 
 if __name__ == "__main__":
