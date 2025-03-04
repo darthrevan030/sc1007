@@ -116,6 +116,9 @@ class Queue:
 #########################################################################################################################################
 def reverse_stack(stack):
     
+    if stack.isEmpty():
+        return
+    
     queue = Queue()
 
     while not stack.isEmpty():
