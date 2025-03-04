@@ -77,7 +77,24 @@ class LinkedList:
 
 #######################################################################################################################################
 def remove_duplicates_sorted_ll(ll):
-    return
+    if ll.head is None:
+        return
+    
+    prev = None
+    cur = ll.head
+    index = 0
+
+    while cur.next is not None:
+
+        if cur.item == cur.next.item:
+            ll.removeNode(index)
+            cur = cur.next
+            index += 1
+            
+        else:
+            cur = cur.next
+            index += 1
+
 #######################################################################################################################################
 
 if __name__ == "__main__":
