@@ -116,7 +116,16 @@ class Queue:
 #########################################################################################################################################
 def reverse_stack(stack):
     
-    return
+    queue = Queue()
+
+    while not stack.isEmpty():
+        item = stack.pop()
+        queue.enqueue(item)
+    
+    while not queue.isEmpty():
+        item2 = queue.dequeue()
+        stack.push(item2)
+
 #########################################################################################################################################
 
 # Main function
