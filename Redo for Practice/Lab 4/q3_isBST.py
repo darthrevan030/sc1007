@@ -52,7 +52,7 @@ def isBST(node, min_val=float('-inf'), max_val=float('inf')):
     if node is None:
         return 1
     
-    if not (min_val < node.item > max_val):
+    if not (min_val < node.item < max_val):
         return 0
     
     return isBST(node.left, min_val, node.item) and isBST(node.right, min_val, max_val)
