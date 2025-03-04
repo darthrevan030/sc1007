@@ -105,6 +105,20 @@ class Queue:
 #########################################################################################################################################
 def reverse_first_k_items(queue, k):
     
+    stack = Stack()
+
+    for i in range(k):
+        item = queue.dequeue()
+        stack.push(item)
+    
+    while not stack.is_empty():
+        item2 = stack.pop()
+        queue.enqueue(item2)
+    
+    for j in range(queue.ll.size - k):
+        item3 = queue.dequeue()
+        queue.enqueue(item3)
+
     return
 #########################################################################################################################################
 
