@@ -85,18 +85,23 @@ def moveMaxToFront(ll):
     
     cur = ll.head
     max = ll.head.item
-    index = 1
+    index = 0
+    indexToSave = 0
 
-    for i in range(ll.size):
+    while cur is not None:
 
         if cur.item > max:
             max = cur.item
-            indexS = index
+            indexToSave = index
         
         cur = cur.next
         index += 1
     
-    ll.removeNode(indexS)
+
+    if indexToSave == 0:
+        return
+    
+    ll.removeNode(indexToSave)
 
     ll.insertNode(max, 0)
 
