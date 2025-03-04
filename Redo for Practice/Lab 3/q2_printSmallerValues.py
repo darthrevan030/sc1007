@@ -22,8 +22,16 @@ def printTree(node, level=0, prefix="Root: "):
 
 ###########################################################################################################################################
 def printSmallerValues(node, m):
-# Write your code here #
-    return
+    if node is None:
+        return
+    
+    if node:
+        printSmallerValues(node.left, m)
+        printSmallerValues(node.right, m)
+        if node.item < m:
+            print(node.item, end = ", ")
+
+
 ###########################################################################################################################################
 
 if __name__ == "__main__":
