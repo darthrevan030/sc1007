@@ -77,6 +77,25 @@ class LinkedList:
         
 ####################################################################################################################################
 def moveEvenItemsToBack(ll):
+    if ll.head is None:
+        return
+    
+    if ll.size == 1:
+        return
+    
+    index = 0
+    cur = ll.head
+
+    for i in range(ll.size):
+        if cur.item % 2 == 0:
+            temp = cur
+            cur = cur.next
+            ll.removeNode(index)
+            ll.insertNode(ll.size, temp)
+        else:
+            cur = cur.next
+            index += 1
+
     return
 ####################################################################################################################################
 
