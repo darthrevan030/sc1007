@@ -22,8 +22,19 @@ def printTree(node, level=0, prefix="Root: "):
 
 ###########################################################################################################################################
 def hasGreatGrandchild(node):
-# Write your code here #
-    return
+
+    if node is None:
+        return -1
+    
+    leftHeight = hasGreatGrandchild(node.left)
+    rightHeight = hasGreatGrandchild(node.right)
+
+    maxHeight = max(leftHeight, rightHeight)
+
+    if maxHeight > 1:
+        print(node.item, end = ", ")
+    
+    return maxHeight + 1
 ###########################################################################################################################################
 if __name__ == "__main__":
     # Create a tree with nodes having great-grandchildren
