@@ -79,8 +79,7 @@ class LinkedList:
 def remove_duplicates_sorted_ll(ll):
     if ll.head is None:
         return
-    
-    prev = None
+
     cur = ll.head
     index = 0
 
