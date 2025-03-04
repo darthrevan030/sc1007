@@ -6,8 +6,15 @@ class BTNode:
 
 ##################################################################################################################################
 def insertBSTNode(node, value):
-# Write your code here #
-    return
+    if root is None:
+        return BTNode(value)
+    
+    if value < node.item:
+        node.left = insertBSTNode(node.left, value)
+    elif value > node.item:
+        node.right = insertBSTNode(node.right, value)
+
+    return node
 ##################################################################################################################################
 
 def printTree(node, level=0, prefix="Root: "):
