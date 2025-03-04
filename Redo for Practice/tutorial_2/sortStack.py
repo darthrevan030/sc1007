@@ -86,6 +86,21 @@ class Stack:
 #########################################################################################################################################
 def sort_stack(stack):
     
+    if stack.isEmpty():
+        return
+
+    tempStack = Stack()
+
+    while not stack.isEmpty():
+        temp = stack.pop()
+        while not tempStack.is_empty() and not stack.peek() > temp:
+            stack.push(tempStack.pop())
+        tempStack.push(temp)
+
+    while not tempStack.is_empty():
+        stack.push(tempStack.pop())
+
+
     return
 #########################################################################################################################################
 
