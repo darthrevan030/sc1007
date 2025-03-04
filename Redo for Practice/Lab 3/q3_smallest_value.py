@@ -22,8 +22,25 @@ def printTree(node, level=0, prefix="Root: "):
 
 ###########################################################################################################################################
 def smallest_value(node):
-# Write your code here #
-    return
+
+    if node is None:
+        return
+    
+    minimum = node.item
+    queue = [node]
+
+    while queue:
+        current = queue.pop(0)
+
+        if current.item < minimum:
+            minimum = current.item
+        
+        if current.left:
+            queue.append(current.left)
+        if current.right:
+            queue.append(current.right)
+    
+    return minimum
 ###########################################################################################################################################
 if __name__ == "__main__":
     root = BTNode(4)
