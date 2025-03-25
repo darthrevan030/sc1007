@@ -1,3 +1,7 @@
+import time
+import random
+import matplotlib.pyplot as plt
+
 def bubble_sort(arr):
     n = len(arr)
     for i in range(n):
@@ -38,3 +42,35 @@ def merge_sort(arr):
             arr[k] = right_half[j]
             j += 1
             k += 1
+
+def measure_time(sort_function, arr):
+    start_time = time.time()
+    sort_function(arr)
+    end_time = time.time()
+    total_time = end_time - start_time
+    return total_time
+
+sizes = [100, 1000, 10000, 100000]
+bubble_sort_times = []
+merge_sort_times = []
+
+for size in sizes:
+    arr = [random.randint(0, 10000000) for i in range(size)]
+    arr_copy = arr[:]
+
+    bubble_time = measure_time(bubble_sort, arr)
+    merge_time = measure_time(merge_sort, arr)
+
+    bubble_sort_times.append(bubble_time)
+    merge_sort_times.append(merge_time)
+
+    print(f"Size: {size}, Bubble Sort Time: {bubble_time:.5f} sec, Merge Sort Time: {merge_time:.5f} sec")
+
+plt.plot(sizes, bubble_sort_times, marker = "o", label = "Bubble Sort")
+plt.plot(sizes, merge_sort_times, marker = "s", label = "Merge Sort")
+plt.xlabel("Input size")
+plt.ylable("Execution Time (seconds)")
+plt.title("Bubble Sort vs Merge Sort Execution Times")
+plt.legend()
+plt.grid()
+plt.show()
