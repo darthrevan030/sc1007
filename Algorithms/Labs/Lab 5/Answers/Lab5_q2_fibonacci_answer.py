@@ -1,3 +1,6 @@
+import time
+import matplotlib.pyplot as plt
+
 def recursive_fibonacci(n):
     if n <= 0:
         return 0
@@ -17,3 +20,37 @@ def iterative_fibonacci(n):
         b = a
         a = c
     return c
+
+def measure_time(func, n):
+    start_time = time.time()
+    result = func(n)
+    end_time = time.time()
+    total_time = end_time - start_time
+    return total_time
+
+n_values = [20,30, 40, 45]
+recursive_times = []
+iterative_times = []
+recursive_results = []
+iterative_results = []
+
+for n in n_values:
+    rec_time, rec_result = measure_time(recursive_fibonacci, n)
+    itr_time, itr_result = measure_time(iterative_fibonacci, n)
+    
+    recursive_times.append(rec_time)
+    iterative_times.append(itr_time)
+    recursive_results.append(rec_result)
+    iterative_results.append(itr_result)
+
+    print(f"n: (n), Recursive Fibonacci: {rec_result}, Recursive Time: {rec_time:.5f} sec")
+    print(f"n: (n), Iterative Fibonacci: {itr_result}, Iterative Time: {itr_time:sf} sec\n")
+
+plt.plot(n_values, recursive_times, marker = "o", label = "Recursive Fibonacci")
+plt.plot(n_values, iterative_times, marker = "s", label = "Iterative Fibonacci")
+plt.xlabel('n Value')
+plt.ylabel("Execution Time (seconds)")
+plt.title("Recursive vs Iterative Fibonacci Execution Time")
+plt.legend()
+plt.grid()
+plt.show()
