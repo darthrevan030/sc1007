@@ -17,6 +17,14 @@ Source Limit: 1024 KB
 
 def kth_smallest(matrix, k):
     #insert your codes here
+    count = 0
+    for i in range(k):
+        for j in range(k):
+            count += 1
+            if count == k:
+                return matrix[i][j]
+                
+            
 if __name__ == "__main__":
     matrix = [
             [1, 5, 9],
