@@ -19,9 +19,9 @@ def kth_smallest(matrix, k):
     #insert your codes here
 if __name__ == "__main__":
     matrix = [
-            [1], [5], [9],
-            [10], [11], [13],
-            [12], [13], [15]
+            [1, 5, 9],
+            [10, 11, 13],
+            [12, 13, 15]
             ]
     result = kth_smallest(matrix, 5)
     print(result)
