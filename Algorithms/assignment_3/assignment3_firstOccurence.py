@@ -36,9 +36,12 @@ def first_occurrence(arr, target):
 
 
 if __name__ == "__main__":
+    # Visible Test Case 1
     arr = [1, 2, 2, 2, 3, 4]
     result = first_occurrence(arr, 2)
     print(result)
+    
+    # Visible Test Case 2
     arr2 = [1, 2, 3, 4]
     result2 = first_occurrence(arr2, 5)
     print(result2)
