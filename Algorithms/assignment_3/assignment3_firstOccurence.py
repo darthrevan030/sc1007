@@ -12,7 +12,23 @@ Source Limit: 1024 KB
 
 def first_occurrence(arr, target):
     #insert your codes
+    n = len(arr)
+    
+    i = 0
+    j = n - 1
 
+    while i <= j:
+        k = (i + j) // 2
+        if target <= arr[k]:
+            j = k - 1
+        if arr[k] <= target:
+            i = k + 1
+    
+    if arr[k] == target:
+        return k
+    else:
+        return -1
+    
 
 
 if __name__ == "__main__":
