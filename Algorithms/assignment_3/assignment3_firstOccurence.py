@@ -14,21 +14,25 @@ def first_occurrence(arr, target):
     #insert your codes
     n = len(arr)
     
+    if n == 0:
+        return -1
+
     i = 0
     j = n - 1
 
+    result = -1
+
     while i <= j:
         k = (i + j) // 2
-        if target <= arr[k]:
+        if arr[k] == target:
+            result = k
             j = k - 1
-        if arr[k] <= target:
+        elif arr[k] > target:
+            j = k - 1
+        else:
             i = k + 1
     
-    if arr[k] == target:
-        return k
-    else:
-        return -1
-    
+    return result
 
 
 if __name__ == "__main__":
