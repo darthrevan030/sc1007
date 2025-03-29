@@ -13,16 +13,26 @@ Time Limit: 0.05s for each input
 Memory Limit: 256 MB
 Source Limit: 1024 KB
 '''
-
+import heapq
 
 def kth_smallest(matrix, k):
     #insert your codes here
-    count = 0
-    for i in range(len(matrix)):
-        for j in range(len(matrix)):
-            count += 1
-            if count == k:
-                return matrix[i][j]
+    n = len(matrix)
+    min_heap = []
+    
+    # Add the first element of each row to the heap
+    for i in range(min(n, k)):
+        # (value, row, column)
+        heapq.heappush(min_heap, (matrix[i][0], i, 0))
+    
+    # Pop from heap k-1 times
+    for _ in range(k - 1):
+        val, row, col = heapq.heappop(min_heap)
+        if col + 1 < n:
+            heapq.heappush(min_heap, (matrix[row][col + 1], row, col + 1))
+    
+    # The kth element is at the top of the heap
+    return heapq.heappop(min_heap)[0]
                 
             
 if __name__ == "__main__":
