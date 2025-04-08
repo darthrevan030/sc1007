@@ -52,6 +52,17 @@ class HashTable:
             return True
         
     def hash_search(self, key):
+        i = 0
+        index = self._hash(key, i)
+        while self.table[index] is not None:
+            if self.table[index].key == key and not self.table[index].deleted:
+                return True
+            
+            i += 1
+            index = self._hash(key, i)
+            if i >= self.size:
+                return False # key not found
+
     def hash_print(self):
         print("Hash Table:")
         for i, node in enumerate(self.table):
