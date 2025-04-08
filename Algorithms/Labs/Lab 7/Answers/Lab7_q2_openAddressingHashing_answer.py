@@ -13,13 +13,10 @@ class HashTable:
         return (key + i) % self.size  # Linear probing function
 
     def hash_insert(self, key):
-        pass #add your implementations
 
     def hash_delete(self, key):
-        pass #add your implementations
 
     def hash_search(self, key):
-        pass #add your implementations
 
     def hash_print(self):
         print("Hash Table:")
