@@ -35,6 +35,22 @@ class HashTable:
         
 
     def hash_delete(self, key):
+        i = 0
+        index = self._hash(key, i)
+
+        while self.table[index] is not None:
+            if self.table[index].key == key and not self.table[index].deleted:
+                self.table[index].deleted = True # mark as deleted
+                self.count -= 1
+                return True
+            
+            i += 1
+            index = self._hash(key, i)
+            if i >= self.size:
+                return False # key not found
+            
+            return True
+        
     def hash_search(self, key):
     def hash_print(self):
         print("Hash Table:")
