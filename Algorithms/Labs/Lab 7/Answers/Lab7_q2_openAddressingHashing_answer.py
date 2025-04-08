@@ -13,11 +13,29 @@ class HashTable:
         return (key + i) % self.size  # Linear probing function
 
     def hash_insert(self, key):
+        if self.count >= self.size:
+            print("Hash table is full. Cannot insert new key.")
+            return False
+        
+        i = 0
+
+        index = self._hash(key, i)
+        while self.table[index] is not None and not self.table[index].deleted:
+            if self.table[index].key == key:
+                return False # duplicate key
+            
+            i += 1
+            index = self._hash(key, i)
+            if i >= self.size:
+                return False # table is full
+        
+        self.table[index] = HashTableNode(key) # add new key to table
+        self.count += 1
+        return True
+        
 
     def hash_delete(self, key):
-
     def hash_search(self, key):
-
     def hash_print(self):
         print("Hash Table:")
         for i, node in enumerate(self.table):
