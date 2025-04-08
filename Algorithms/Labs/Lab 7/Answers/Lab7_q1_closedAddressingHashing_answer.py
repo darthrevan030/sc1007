@@ -25,7 +25,16 @@ class HashTable:
         return True
 
     def hash_search(self, key):
-        pass #add your implementations
+        index = self._hash(key)
+        
+        cur = self.table[index]
+
+        while cur:
+            if cur.key == key:
+                return True
+            cur = cur.next
+        
+        return False
 
     def hash_print(self):
         print("Hash Table:")
