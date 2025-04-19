@@ -19,10 +19,91 @@ def hash2(key):
 def hash_insert(key, hash_table):
     # Write your code here
 
+    # Double hashing implementation
+    h1 = hash1(key)
+    h2 = hash2(key)
+    i = 0
+    comparisons = 0
+    
+    while i < TABLESIZE:
+        probe_index = (h1 + i * h2) % TABLESIZE
+        
+        # If slot is EMPTY or DELETED, we need to verify the key is not already in the table
+        # before we can insert
+        if hash_table[probe_index].indicator == EMPTY or hash_table[probe_index].indicator == DELETED:
+            # Save this position as a potential insertion point
+            potential_insertion = probe_index
+            
+            # Continue probing to make sure the key doesn't exist elsewhere
+            j = i + 1
+            found_duplicate = False
+            
+            while j < TABLESIZE:
+                next_probe = (h1 + j * h2) % TABLESIZE
+                
+                if hash_table[next_probe].indicator == USED and hash_table[next_probe].key == key:
+                    # Found a duplicate
+                    comparisons += 1
+                    found_duplicate = True
+                    break
+                
+                if hash_table[next_probe].indicator == EMPTY:
+                    # Reached an empty slot, so we know key is not in table
+                    break
+                
+                # If slot is USED and key doesn't match or slot is DELETED
+                j += 1
+                comparisons += 1
+            
+            if found_duplicate:
+                return -1  # Duplicate key found
+            
+            # If we get here, the key is not in the table, so we can insert
+            hash_table[potential_insertion].key = key
+            hash_table[potential_insertion].indicator = USED
+            return comparisons + 1  # +1 for the initial comparison
+            
+        # If we find the key already in the table
+        elif hash_table[probe_index].indicator == USED and hash_table[probe_index].key == key:
+            comparisons += 1
+            return -1  # Duplicate key
+        
+        # Increment the probe sequence and continue
+        i += 1
+        comparisons += 1
+    
+    # If we get here, the table is full
+    return comparisons
 
 
 def hash_delete(key, hash_table):
     # Write your code here
+    
+    # Double hashing for deletion
+    h1 = hash1(key)
+    h2 = hash2(key)
+    i = 0
+    comparisons = 0
+    
+    while i < TABLESIZE:
+        probe_index = (h1 + i * h2) % TABLESIZE
+        comparisons += 1
+        
+        # If we find the key
+        if hash_table[probe_index].indicator == USED and hash_table[probe_index].key == key:
+            # Mark as DELETED instead of EMPTY to maintain probe chains
+            hash_table[probe_index].indicator = DELETED
+            return comparisons
+        
+        # If we hit an EMPTY slot, the key is not in the table
+        if hash_table[probe_index].indicator == EMPTY:
+            return -1
+        
+        # Continue probing
+        i += 1
+    
+    # If we've probed the entire table and didn't find the key
+    return -1
 
 
 def print_menu():
