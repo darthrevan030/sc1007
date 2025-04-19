@@ -17,9 +17,61 @@ def hash_func(key):
 def hash_insert(key, hash_table):
     # Write your insertion logic here
 
+    # First check if the key already exists in the hash table
+    hashed_index = hash_func(key)
+    current_index = hashed_index
+    
+    # Check if the key already exists in the hash table
+    while current_index != -1:
+        if hash_table[current_index].indicator == USED and hash_table[current_index].key == key:
+            return -1  # Duplicate key
+        current_index = hash_table[current_index].next
+    
+    # Key doesn't exist, so we can insert it
+    home_index = hash_func(key)
+    
+    # Check if home position is available
+    if hash_table[home_index].indicator == EMPTY:
+        hash_table[home_index].key = key
+        hash_table[home_index].indicator = USED
+        return home_index
+    
+    # Home position is occupied, find a free slot for the new key
+    next_free = TABLESIZE
+    for i in range(TABLESIZE):
+        if hash_table[i].indicator == EMPTY:
+            next_free = i
+            break
+    
+    if next_free == TABLESIZE:
+        return TABLESIZE  # Table is full
+    
+    # Insert the key into the free slot
+    hash_table[next_free].key = key
+    hash_table[next_free].indicator = USED
+    
+    # Find the last node in the chain starting from home position
+    current_index = home_index
+    while hash_table[current_index].next != -1:
+        current_index = hash_table[current_index].next
+    
+    # Link the last node to our new node
+    hash_table[current_index].next = next_free
+    
+    return next_free
 
 def hash_find(key, hash_table):
     # Write your search logic here
+    hashed_index = hash_func(key)
+    current_index = hashed_index
+    
+    # Traverse the chain to find the key
+    while current_index != -1:
+        if hash_table[current_index].indicator == USED and hash_table[current_index].key == key:
+            return current_index  # Key found
+        current_index = hash_table[current_index].next
+    
+    return -1  # Key not found
 
 
 def print_menu():
