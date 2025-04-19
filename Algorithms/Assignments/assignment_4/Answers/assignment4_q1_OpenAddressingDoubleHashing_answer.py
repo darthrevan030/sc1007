@@ -24,55 +24,36 @@ def hash_insert(key, hash_table):
     h2 = hash2(key)
     i = 0
     comparisons = 0
+    insertion_index = -1
     
+    # First, check if the key already exists and find potential insertion point
     while i < TABLESIZE:
         probe_index = (h1 + i * h2) % TABLESIZE
         
-        # If slot is EMPTY or DELETED, we need to verify the key is not already in the table
-        # before we can insert
-        if hash_table[probe_index].indicator == EMPTY or hash_table[probe_index].indicator == DELETED:
-            # Save this position as a potential insertion point
-            potential_insertion = probe_index
-            
-            # Continue probing to make sure the key doesn't exist elsewhere
-            j = i + 1
-            found_duplicate = False
-            
-            while j < TABLESIZE:
-                next_probe = (h1 + j * h2) % TABLESIZE
-                
-                if hash_table[next_probe].indicator == USED and hash_table[next_probe].key == key:
-                    # Found a duplicate
-                    comparisons += 1
-                    found_duplicate = True
-                    break
-                
-                if hash_table[next_probe].indicator == EMPTY:
-                    # Reached an empty slot, so we know key is not in table
-                    break
-                
-                # If slot is USED and key doesn't match or slot is DELETED
-                j += 1
-                comparisons += 1
-            
-            if found_duplicate:
-                return -1  # Duplicate key found
-            
-            # If we get here, the key is not in the table, so we can insert
-            hash_table[potential_insertion].key = key
-            hash_table[potential_insertion].indicator = USED
-            return comparisons + 1  # +1 for the initial comparison
-            
-        # If we find the key already in the table
-        elif hash_table[probe_index].indicator == USED and hash_table[probe_index].key == key:
+        if hash_table[probe_index].indicator == USED:
             comparisons += 1
-            return -1  # Duplicate key
+            if hash_table[probe_index].key == key:
+                return -1  # Duplicate key
+        elif hash_table[probe_index].indicator == EMPTY:
+            # Found an empty slot and no duplicates so far
+            if insertion_index == -1:
+                insertion_index = probe_index
+            break
+        elif hash_table[probe_index].indicator == DELETED:
+            # Found a deleted slot, can potentially insert here
+            if insertion_index == -1:
+                insertion_index = probe_index
         
-        # Increment the probe sequence and continue
         i += 1
-        comparisons += 1
     
-    # If we get here, the table is full
+    # If we've checked all slots and found no duplicates and no empty slots
+    if i == TABLESIZE and insertion_index == -1:
+        return TABLESIZE  # Table is full
+    
+    # Insert the key
+    hash_table[insertion_index].key = key
+    hash_table[insertion_index].indicator = USED
+    
     return comparisons
 
 
