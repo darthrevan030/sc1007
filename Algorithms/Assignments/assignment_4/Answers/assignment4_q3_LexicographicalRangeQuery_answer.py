@@ -85,6 +85,81 @@ class Trie:
 
 def count_in_range(trie, L, R):
     #write you codes here
+    """
+    Count words in the trie that are lexicographically between L and R (inclusive).
+    """
+    count = [0]  # Using a list to allow modification in nested functions
+    
+    def dfs_count_all_words(node):
+        """Count all words in the subtree rooted at node"""
+        if not node:
+            return 0
+        
+        words_count = 1 if node.is_end_of_word else 0
+        
+        # Process all children
+        child = node.first_child
+        while child:
+            words_count += dfs_count_all_words(child)
+            child = child.next_sibling
+            
+        return words_count
+    
+    def is_prefix_of(prefix, word):
+        """Check if prefix is a prefix of word"""
+        if len(prefix) > len(word):
+            return False
+        
+        for i in range(len(prefix)):
+            if prefix[i] != word[i]:
+                return False
+        return True
+    
+    def is_less_or_equal(s1, s2):
+        """Check if s1 is lexicographically less than or equal to s2"""
+        min_len = min(len(s1), len(s2))
+        
+        for i in range(min_len):
+            if s1[i] < s2[i]:
+                return True
+            elif s1[i] > s2[i]:
+                return False
+        
+        # If we've reached here, the first min_len characters are the same
+        return len(s1) <= len(s2)
+    
+    def count_words_in_range(node, prefix, L, R):
+        """
+        Count words in the subtree rooted at node that are lexicographically
+        between L and R (inclusive) and have the given prefix.
+        """
+        if not node:
+            return
+        
+        current_word = prefix + node.char if node.char else prefix
+        
+        # Process the current node
+        if node.is_end_of_word and current_word:
+            if is_less_or_equal(L, current_word) and is_less_or_equal(current_word, R):
+                count[0] += 1
+        
+        # Skip subtrees that can't contain words in the range
+        child = node.first_child
+        while child:
+            next_word = current_word + child.char
+            
+            # If next_word could be <= R
+            if is_less_or_equal(next_word, R) or is_prefix_of(next_word, R):
+                # And if it's possible to have words >= L in this subtree
+                if is_less_or_equal(L, next_word) or is_prefix_of(L, next_word) or is_less_or_equal(next_word, L):
+                    count_words_in_range(child, current_word, L, R)
+            
+            child = child.next_sibling
+    
+    # Start the count from the root
+    count_words_in_range(trie.root, "", L, R)
+    
+    return count[0]
 
 #Read input
 n, q = map(int, input().split())
