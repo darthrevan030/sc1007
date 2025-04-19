@@ -17,9 +17,9 @@ def hash_func(key):
 def hash_insert(key, hash_table):
     # Write your insertion logic here
 
-    # First check if the key already exists in the hash table
-    hashed_index = hash_func(key)
-    current_index = hashed_index
+    # Check if the key already exists in the hash table
+    home_index = hash_func(key)
+    current_index = home_index
     
     # Check if the key already exists in the hash table
     while current_index != -1:
@@ -28,37 +28,35 @@ def hash_insert(key, hash_table):
         current_index = hash_table[current_index].next
     
     # Key doesn't exist, so we can insert it
-    home_index = hash_func(key)
-    
-    # Check if home position is available
+    # If home position is available, use it
     if hash_table[home_index].indicator == EMPTY:
         hash_table[home_index].key = key
         hash_table[home_index].indicator = USED
         return home_index
     
-    # Home position is occupied, find a free slot for the new key
-    next_free = TABLESIZE
-    for i in range(TABLESIZE):
-        if hash_table[i].indicator == EMPTY:
-            next_free = i
-            break
+    # Home position is occupied, need to find the next available slot
+    # Start from the home_index + 1 and wrap around if needed
+    next_available = (home_index + 1) % TABLESIZE
+    while next_available != home_index and hash_table[next_available].indicator == USED:
+        next_available = (next_available + 1) % TABLESIZE
     
-    if next_free == TABLESIZE:
+    if next_available == home_index:
         return TABLESIZE  # Table is full
     
-    # Insert the key into the free slot
-    hash_table[next_free].key = key
-    hash_table[next_free].indicator = USED
+    # Insert the key into the next available slot
+    hash_table[next_available].key = key
+    hash_table[next_available].indicator = USED
     
-    # Find the last node in the chain starting from home position
+    # Now we need to link this to the chain
+    # We follow the chain from the home position to the end
     current_index = home_index
     while hash_table[current_index].next != -1:
         current_index = hash_table[current_index].next
     
     # Link the last node to our new node
-    hash_table[current_index].next = next_free
+    hash_table[current_index].next = next_available
     
-    return next_free
+    return next_available
 
 def hash_find(key, hash_table):
     # Write your search logic here
