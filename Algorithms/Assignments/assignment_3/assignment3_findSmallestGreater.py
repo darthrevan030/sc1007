@@ -56,6 +56,6 @@ if __name__ == "__main__":
     print(result2)
 
     # Additional Test Case for sanity check
-    arr2 = [2]
-    result2 = find_smallest_greater(arr2, 1)
-    print(result2)
+    arr3 = [2]
+    result3 = find_smallest_greater(arr3, 1)
+    print(result3)
