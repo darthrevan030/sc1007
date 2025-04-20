@@ -14,7 +14,32 @@ Source Limit: 1024 KB
 
 def find_smallest_greater(arr, x):
     #insert your codes here
+    n = len(arr)
 
+    if n == 0:
+        return -1
+    
+    if n < 2:
+        if arr[0] > x:
+            return arr[0]
+
+    left = 0
+    right = n -1
+
+    result = -1
+
+    while left <= right:
+        mid = (left + right) //2
+        if arr[mid] == x:
+            left = mid + 1
+            right = n - 1
+        elif arr[mid] > x:
+            result = arr[mid]
+            right = mid - 1
+        else:
+            left = mid + 1
+    
+    return result
 
 
 
