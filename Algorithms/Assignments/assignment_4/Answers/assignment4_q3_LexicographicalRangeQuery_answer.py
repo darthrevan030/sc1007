@@ -90,76 +90,40 @@ def count_in_range(trie, L, R):
     """
     count = [0]  # Using a list to allow modification in nested functions
     
-    def dfs_count_all_words(node):
-        """Count all words in the subtree rooted at node"""
-        if not node:
-            return 0
-        
-        words_count = 1 if node.is_end_of_word else 0
-        
-        # Process all children
-        child = node.first_child
-        while child:
-            words_count += dfs_count_all_words(child)
-            child = child.next_sibling
-            
-        return words_count
+    def is_between(word, L, R):
+        """Check if word is lexicographically between L and R (inclusive)"""
+        return L <= word <= R           # Using Python's string comparison
     
-    def is_prefix_of(prefix, word):
-        """Check if prefix is a prefix of word"""
-        if len(prefix) > len(word):
-            return False
-        
-        for i in range(len(prefix)):
-            if prefix[i] != word[i]:
-                return False
-        return True
-    
-    def is_less_or_equal(s1, s2):
-        """Check if s1 is lexicographically less than or equal to s2"""
-        min_len = min(len(s1), len(s2))
-        
-        for i in range(min_len):
-            if s1[i] < s2[i]:
-                return True
-            elif s1[i] > s2[i]:
-                return False
-        
-        # If we've reached here, the first min_len characters are the same
-        return len(s1) <= len(s2)
-    
-    def count_words_in_range(node, prefix, L, R):
-        """
-        Count words in the subtree rooted at node that are lexicographically
-        between L and R (inclusive) and have the given prefix.
-        """
-        if not node:
+    def dfs(node, prefix):
+        """Depth-first search to count words in range"""
+        if not node:                    # Base case: null node
             return
         
-        current_word = prefix + node.char if node.char else prefix
+        current_word = prefix + node.char if node.char else prefix  # Build current word
         
-        # Process the current node
-        if node.is_end_of_word and current_word:
-            if is_less_or_equal(L, current_word) and is_less_or_equal(current_word, R):
-                count[0] += 1
+        # If we've found a complete word, check if it's in the range
+        if node.is_end_of_word and current_word:    # If this is a complete word
+            if is_between(current_word, L, R):      # Check if it's in the range
+                count[0] += 1                       # Increment count
         
-        # Skip subtrees that can't contain words in the range
-        child = node.first_child
-        while child:
-            next_word = current_word + child.char
+        # Recursively explore all children
+        child = node.first_child                    # Get first child
+        while child:                                # For each child
+            # Early pruning: only explore branches that could lead to words in range
+            next_word = current_word + child.char   # Build next possible word
             
-            # If next_word could be <= R
-            if is_less_or_equal(next_word, R) or is_prefix_of(next_word, R):
+            # If next_word could be <= R (i.e., in range or a prefix of words in range)
+            if next_word <= R:                      # If still within upper bound
                 # And if it's possible to have words >= L in this subtree
-                if is_less_or_equal(L, next_word) or is_prefix_of(L, next_word) or is_less_or_equal(next_word, L):
-                    count_words_in_range(child, current_word, L, R)
+                if L <= next_word or L.startswith(next_word):  # If potentially above lower bound
+                    dfs(child, current_word)        # Recursively explore this branch
             
-            child = child.next_sibling
+            child = child.next_sibling              # Move to next sibling
     
-    # Start the count from the root
-    count_words_in_range(trie.root, "", L, R)
+    # Start the traversal from the root with an empty prefix
+    dfs(trie.root, "")                  # Start DFS from root
     
-    return count[0]
+    return count[0]                     # Return the final count
 
 #Read input
 n, q = map(int, input().split())
