@@ -16,10 +16,52 @@ def hash_func(key):
 
 def hash_insert(key, hash_table):
     # Write your insertion logic here
+    homeIndex = hash_func(key)
+    curIndex = homeIndex
+
+    while curIndex != -1:
+        if hash_table[curIndex].indicator == USED and hash_table[curIndex].key == key:
+            return -1
+        curIndex = hash_table[curIndex].next
+    
+    if hash_table[homeIndex].indicator == EMPTY:
+        hash_table[homeIndex].key = key
+        hash_table[homeIndex].indicator = USED
+        return homeIndex
+    
+    nextAvailableSlot = (homeIndex + 1) % TABLESIZE
+
+    while nextAvailableSlot != homeIndex and hash_table[nextAvailableSlot].indicator == USED:
+        nextAvailableSlot = (nextAvailableSlot + 1) % TABLESIZE
+
+    if nextAvailableSlot == homeIndex:
+        return TABLESIZE
+    
+    hash_table[nextAvailableSlot].key = key
+    hash_table[nextAvailableSlot].indicator = USED
+
+    curIndex = homeIndex
+    while hash_table[curIndex].next != -1:
+        curIndex = hash_table[curIndex].next
+    
+    hash_table[curIndex].next = nextAvailableSlot
+
+    return nextAvailableSlot
+    
 
 
 def hash_find(key, hash_table):
     # Write your search logic here
+    
+    hashIndex = hash_func(key)
+    curIndex = hashIndex
+
+    while curIndex != -1:
+        if hash_table[curIndex].indicator == USED and hash_table[curIndex].key == key:
+            return curIndex
+        curIndex = curIndex.next
+
+    return -1
 
 
 

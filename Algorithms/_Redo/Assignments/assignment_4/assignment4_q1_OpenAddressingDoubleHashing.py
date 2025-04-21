@@ -18,12 +18,62 @@ def hash2(key):
 
 def hash_insert(key, hash_table):
     # Write your code here
+    h1 = hash1(key)
+    h2 = hash2(key)
+    i = 0
+    comparisons = 0
+    insertionIndex = -1
 
+    while i < TABLESIZE:
+        probeIndex = (h1 + i * h2) % TABLESIZE
+
+        if hash_table[probeIndex].indicator == USED:
+            comparisons += 1
+            if hash_table[probeIndex].key == key:
+                return -1
+        elif hash_table[probeIndex].indicator == EMPTY:
+            if insertionIndex == -1:
+                insertionIndex = probeIndex
+            break
+        elif hash_table[probeIndex].indicator == DELETED:
+            if insertionIndex == -1:
+                insertionIndex = probeIndex
+        
+        i += 1
+
+    
+    if i == TABLESIZE and insertionIndex == -1:
+        return TABLESIZE
+    
+
+    hash_table[insertionIndex].key = key
+    hash_table[insertionIndex].indicator = USED
+
+    return comparisons
 
 
 def hash_delete(key, hash_table):
     # Write your code here
+    h1 = hash1(key)
+    h2 = hash2(key)
 
+    i = 0
+    comparisons = 0
+
+    while i < TABLESIZE:
+        probeIndex = (h1 + i * h2) % TABLESIZE
+        comparisons += 1
+
+        if hash_table[probeIndex].indicator == USED and hash_table[probeIndex].key == key:
+            hash_table[probeIndex].indicator = DELETED
+            return comparisons
+        
+        if hash_table[probeIndex].indicator == EMPTY:
+            return -1
+        
+        i += 1
+
+    return -1
 
 
 def print_menu():

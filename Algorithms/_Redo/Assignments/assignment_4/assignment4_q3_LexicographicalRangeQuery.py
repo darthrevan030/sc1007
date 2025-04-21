@@ -85,6 +85,35 @@ class Trie:
 
 def count_in_range(trie, L, R):
     #write you codes here
+    count = [0]
+
+    def isBetween(word, L, R):
+        return L <= word <= R
+    
+    def dfs(node, prefix):
+        if  not node:
+            return
+        
+        curWord = prefix + node.char if node.char else prefix
+
+        if node.is_end_of_word and curWord:
+            if isBetween(curWord, L, R):
+                count[0] += 1
+        
+        child = node.first_child
+
+        while child:
+            nextWord = curWord + child.char
+
+            if nextWord <= R:
+                if L <= nextWord or L.startswith(nextWord):
+                    dfs(child, curWord)
+            
+            child = child.next_sibling
+        
+    dfs(trie.root, "")
+
+    return count[0]
 
 
 #Read input
