@@ -34,6 +34,24 @@ class Trie:
 
     def _add_child(self, node, char):
         #add your implementations to insert a child following the alphabetical order
+        newNode = TrieNode(char)
+        
+        if node.first_child is None or char < node.first_child.char:
+            newNode.next_sibling = node.first_child
+            node.first_child = newNode
+            return newNode
+        
+        prev = node.first_child
+        cur = prev.next_sibling
+
+        while cur and cur.char < char:
+            prev = cur
+            cur = cur.next_sibling
+        
+        newNode.next_sibling = cur
+        prev.next_sibling = newNode
+        return newNode
+    
 
     def insert(self, word):
         node = self.root
@@ -52,12 +70,40 @@ class Trie:
                 return False
         return node.is_end_of_word
 
+    def dfs(self, node, path):
+        if node.is_end_of_word:
+            print(path)
+        child = node.first_child
+        while child:
+            self.dfs(child, path + child.char)
+            child = child.next_sibling
+
     def print_words_alphabetically(self):
         #add you implementations
+        self.dfs(self.root, "")
 
+
+    def _dfs_reverse(self, node, prefix, words):
+        stack = Stack()
+        child = node.first_child
+        while child:
+            stack.push(child)
+            child = child.next_sibling
+        
+        while not stack.is_empty():
+            child = stack.pop()
+            self._dfs_reverse(child, prefix + child.char, words)
+
+        if node.is_end_of_word:
+            words.append(prefix)
 
     def print_words_reverse_alphabetically(self):
         #add your implementations
+        words = []
+        self._dfs_reverse(self.root, "", words)
+        for word in words:
+            print(word)
+
 
 
 # Assume Trie, TrieNode, and Queue classes have already been defined.
