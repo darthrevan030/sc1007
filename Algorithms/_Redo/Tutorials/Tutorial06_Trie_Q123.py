@@ -65,7 +65,28 @@ class Trie:
         results = []
 
     def count_words(self, node): #question 1
-        #add you implementations
+        #add your implementations
+        count = 0
+        
+        queue = Queue()
+
+        queue.enqueue(self.root)
+
+        while not queue.is_empty():
+            node = queue.dequeue()
+
+            if node.is_end_of_word:
+                count += 1
+            
+            child = node.first_child
+
+            while child:
+                queue.enqueue(child)
+                child = child.next_sibling
+        
+        return count
+
+
 
     def find_shortest_word_with_prefix(self, prefix):#question 3
             # Step 1: Traverse to the end of the prefix
