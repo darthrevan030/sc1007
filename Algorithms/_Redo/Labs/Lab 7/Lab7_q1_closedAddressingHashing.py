@@ -14,10 +14,30 @@ class HashTable:
         return hash(key) % self.size
 
     def hash_insert(self, key):
-        pass #add your implementations
+        #add your implementations
+        if self.hash_search(key):
+            return False
+        
+        newNode = Node(key)
+        index = self._hash(key)
+
+        newNode.next = self.table[index]
+        self.table[index] = newNode
+        return True
+
 
     def hash_search(self, key):
-        pass #add your implementations
+        #add your implementations
+        index = self._hash(key)
+
+        cur = self.table[index]
+
+        while cur:
+            if cur.key == key:
+                return True
+            cur = cur.next
+        
+        return False
 
     def hash_print(self):
         print("Hash Table:")

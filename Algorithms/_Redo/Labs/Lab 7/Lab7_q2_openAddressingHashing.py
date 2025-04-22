@@ -13,13 +13,64 @@ class HashTable:
         return (key + i) % self.size  # Linear probing function
 
     def hash_insert(self, key):
-        pass #add your implementations
+        #add your implementations
+        if self.count >= self.size:
+            print("Hash table is full")
+            return False
+        
+        i = 0
+
+        index = self._hash(key, i)
+
+        while self.table[index] is not None and not self.table[index].deleted:
+            if self.table[index].key == key:
+                return False
+
+            i += 1
+
+            index = self._hash(key, i)
+
+            if i >= self.size:
+                return False
+            
+        self.table[index] = HashTableNode(key)
+        self.count += 1
+        return True
 
     def hash_delete(self, key):
-        pass #add your implementations
+        #add your implementations
+        i = 0
+
+        index = self._hash(key, i)
+
+        while self.table[index] is not None:
+            if self.table[index].key == key and not self.table[index].deleted:
+                self.table[index].deleted = True
+                self.count -= 1
+                return True
+            
+            i += 1
+            index = self._hash(key, i)
+            if i >= self.size:
+                return False
+            
+            return True
 
     def hash_search(self, key):
-        pass #add your implementations
+        #add your implementations
+        i = 0
+
+        index = self._hash(key, i)
+
+        while self.table[index] is not None:
+            if self.table[index].key == key and not self.table[index].deleted:
+                return True
+        
+            i += 1
+            index = self._hash(key, i)
+            if i >= self.size:
+                return False
+        
 
     def hash_print(self):
         print("Hash Table:")
